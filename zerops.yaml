@@ -1,0 +1,62 @@
+zerops:
+  - setup: node
+    build:
+      deployFiles:
+        - ./
+      addToRunPrepare:
+        - ./docker-compose.zerops.yml
+    run:
+      base: docker@latest
+      prepareCommands:
+        - docker compose -f /var/www/docker-compose.zerops.yml build
+      start: docker compose -f /var/www/docker-compose.zerops.yml up --force-recreate
+      ports:
+        - port: 8080
+          protocol: TCP
+          httpSupport: true
+        - port: 62050
+          protocol: TCP
+          httpSupport: false
+        - port: 8081
+          protocol: TCP
+          httpSupport: false
+        - port: 8082
+          protocol: TCP
+          httpSupport: false
+        - port: 8083
+          protocol: TCP
+          httpSupport: false
+        - port: 8084
+          protocol: TCP
+          httpSupport: false
+        - port: 8085
+          protocol: TCP
+          httpSupport: false
+        - port: 8086
+          protocol: TCP
+          httpSupport: false
+        - port: 8087
+          protocol: TCP
+          httpSupport: false
+        - port: 8088
+          protocol: TCP
+          httpSupport: false
+        - port: 8089
+          protocol: TCP
+          httpSupport: false
+        - port: 8090
+          protocol: TCP
+          httpSupport: false
+      readinessCheck:
+        httpGet:
+          port: 8080
+          path: /healthz
+        failureTimeout: 60s
+        retryPeriod: 5s
+      healthCheck:
+        httpGet:
+          port: 8080
+          path: /healthz
+        failureTimeout: 60s
+        recoveryTimeout: 30s
+        execPeriod: 10s

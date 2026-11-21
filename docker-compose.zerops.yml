@@ -1,0 +1,26 @@
+services:
+  node:
+    build:
+      context: /var/www
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    environment:
+      NODE_HOST: 0.0.0.0
+      SERVICE_PORT: ${SERVICE_PORT:-8080}
+      SERVICE_PROTOCOL: ${SERVICE_PROTOCOL:-rest}
+      TLS_ENABLED: ${TLS_ENABLED:-false}
+      API_KEY: ${API_KEY}
+      GENERATED_CONFIG_PATH: /var/lib/pg-node/generated
+      SSL_CERT_FILE: /var/lib/pg-node/certs/ssl_cert.pem
+      SSL_KEY_FILE: /var/lib/pg-node/certs/ssl_key.pem
+      XRAY_EXECUTABLE_PATH: /usr/local/bin/xray
+      XRAY_ASSETS_PATH: /usr/local/share/xray
+      PG_NODE_WG_HOST_ROUTING: ${PG_NODE_WG_HOST_ROUTING:-false}
+    volumes:
+      - pg-node-data:/var/lib/pg-node
+
+volumes:
+  pg-node-data:
