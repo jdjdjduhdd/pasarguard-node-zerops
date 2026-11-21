@@ -4,11 +4,10 @@ zerops:
       base: docker@latest
 
       prepareCommands:
-        - docker image pull ghcr.io/jdjdjduhdd/pasarguard-node:zerops
+        - docker image pull ghcr.io/jdjdjduhdd/pasarguard-node-zerops:latest
 
       start: >-
         docker run --rm --network=host
-        --name pasarguard-node
         -e NODE_HOST=0.0.0.0
         -e SERVICE_PORT=8080
         -e SERVICE_PROTOCOL=rest
@@ -17,62 +16,47 @@ zerops:
         -e GENERATED_CONFIG_PATH=/var/lib/pg-node/generated
         -e PG_NODE_WG_HOST_ROUTING=false
         -v pg-node-data:/var/lib/pg-node
-        ghcr.io/jdjdjduhdd/pasarguard-node:zerops
+        ghcr.io/jdjdjduhdd/pasarguard-node-zerops:latest
 
       ports:
         - port: 8080
-          protocol: TCP
           httpSupport: true
 
         - port: 62050
-          protocol: TCP
           httpSupport: false
 
         - port: 8081
-          protocol: TCP
           httpSupport: false
 
         - port: 8082
-          protocol: TCP
           httpSupport: false
 
         - port: 8083
-          protocol: TCP
           httpSupport: false
 
         - port: 8084
-          protocol: TCP
           httpSupport: false
 
         - port: 8085
-          protocol: TCP
           httpSupport: false
 
         - port: 8086
-          protocol: TCP
           httpSupport: false
 
         - port: 8087
-          protocol: TCP
           httpSupport: false
 
         - port: 8088
-          protocol: TCP
           httpSupport: false
 
         - port: 8089
-          protocol: TCP
           httpSupport: false
 
         - port: 8090
-          protocol: TCP
           httpSupport: false
 
       healthCheck:
         httpGet:
           port: 8080
           path: /healthz
-        failureTimeout: 60s
-        recoveryTimeout: 30s
-        execPeriod: 10s
-        
+          
